@@ -13,7 +13,6 @@ class Solution {
         int n = mat.size();
     int m = mat[0].size();
 
-    // Binary search on the virtual 1D array
     int low = 0, high = n * m - 1;
     while (low <= high) {
         int mid = low + (high - low) / 2;
