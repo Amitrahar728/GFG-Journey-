@@ -4,22 +4,27 @@ using namespace std;
 
 
 // } Driver Code Ends
-// User function template for C++
+
 class Solution {
   public:
+//   bool find(vector<int> arr, int x){
+//       for(int  i =0; i<arr.size(); i++){
+//           if(x == arr[i]){
+//               return false ;
+//           }
+//       }
+//       return true;
+//   }
     int missingNumber(vector<int>& arr) {
-        int n = arr.size() + 1; 
-    int xor1 = 0, xor2 = 0;
-    for (int i = 1; i <= n; i++) {
-        xor1 ^= i;
-    }
+      long long n = arr.size() + 1;
+    long long total = n * (n + 1) / 2;
+    long long sum = 0;
+    for (int num : arr) sum += num;
+    return (int)(total - sum);
 
-    for (int num : arr) {
-        xor2 ^= num;
-    }
-    return xor1 ^ xor2;
     }
 };
+
 
 //{ Driver Code Starts.
 
