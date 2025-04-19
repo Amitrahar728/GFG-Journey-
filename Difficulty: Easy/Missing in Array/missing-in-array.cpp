@@ -7,22 +7,14 @@ using namespace std;
 
 class Solution {
   public:
-//   bool find(vector<int> arr, int x){
-//       for(int  i =0; i<arr.size(); i++){
-//           if(x == arr[i]){
-//               return false ;
-//           }
-//       }
-//       return true;
-//   }
-    int missingNumber(vector<int>& arr) {
-      long long n = arr.size() + 1;
-    long long total = n * (n + 1) / 2;
-    long long sum = 0;
-    for (int num : arr) sum += num;
-    return (int)(total - sum);
-
+    int missingNum(vector<int>& arr) {
+       int n = arr.size() + 1; // size is n-1
+    long long total_sum = 1LL * n * (n + 1) / 2; // use long long to prevent overflow
+    long long array_sum = 0;
+    for (int num : arr) {
+        array_sum += num;
     }
+    return (int)(total_sum - array_sum);}
 };
 
 
@@ -45,7 +37,7 @@ int main() {
             a.push_back(num);
 
         Solution obj;
-        cout << obj.missingNumber(a) << endl;
+        cout << obj.missingNum(a) << endl;
         cout << "~\n";
     }
 
