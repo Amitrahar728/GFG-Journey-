@@ -9,7 +9,7 @@ class Solution {
   public:
     int missingNum(vector<int>& arr) {
        int n = arr.size() + 1; // size is n-1
-    long long total_sum = 1LL * n * (n + 1) / 2; // use long long to prevent overflow
+    long long total_sum = 1LL * n * (n + 1) / 2; 
     long long array_sum = 0;
     for (int num : arr) {
         array_sum += num;
