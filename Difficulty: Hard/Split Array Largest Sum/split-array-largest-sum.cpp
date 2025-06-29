@@ -1,69 +1,47 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
 
-
-// } Driver Code Ends
 class Solution {
-  public:
-    bool isValid(int arr[], int n, int k, int maxSum) {
-    int subarrayCount = 1;
-    int currentSum = 0;
+public:
+    bool check(int mid, vector<int>& arr, int k) {
+        int n = arr.size();
 
-    for (int i = 0; i < n; i++) {
-        if (currentSum + arr[i] > maxSum){
-            subarrayCount++;
-            currentSum = arr[i];
-            if (subarrayCount > k) {
+        int count = 1; // Start with 1 subarray
+        int sum   = 0; // Running sum of current subarray
+
+        for (int i = 0; i < n; i++) {
+            // If any element is greater than mid, we cannot make such a split
+            if (arr[i] > mid) {
                 return false;
             }
-        }
-        else {
-            currentSum += arr[i];
-        }
-    }
 
-    return true;
-    }
-    int splitArray(int arr[] ,int N, int K) {
-        int low = *max_element(arr, arr + N);
-    int high = accumulate(arr, arr + N, 0); 
-    int result = high;
+            sum += arr[i]; // Add current element to current subarray
 
-    while (low <= high) {
-        int mid=low+(high-low)/2;
-        if (isValid(arr, N, K, mid)) {
-            result=mid; 
-            high=mid-1;
-        } 
-        else{
-            low=mid+1;
+            // If the sum exceeds mid, we need to start a new subarray
+            if (sum > mid) {
+                count++;
+                sum = arr[i]; // Start new subarray with current element
+            }
         }
+        return count <= k; // Return true if we used k or fewer subarrays
     }
-    return result;
+    int splitArray(vector<int>& arr, int k) {
+        int n = arr.size();
+
+        int low    = *max_element(arr.begin(), arr.end());        // Minimum possible max subarray sum
+        int high   = accumulate(arr.begin(), arr.end(), 0);       // Maximum possible max subarray sum
+        int result = 0;
+
+        // Binary search for the minimum max subarray sum
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (check(mid, arr, k)) {
+                result = mid;      // Mid is a possible answer
+                high   = mid - 1;  // Try to find a smaller one
+            } else {
+                low = mid + 1;     // Increase mid to try bigger max sum
+            }
+        }
+        return result;
     }
 };
 
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int N, K;
-        
-        cin>>N>>K;
-        int arr[N];
-        
-        for(int i=0 ; i<N ; i++)
-            cin>>arr[i];
-
-        Solution ob;
-        cout<<ob.splitArray(arr,N,K);
-        cout<<"\n";
-    
-cout << "~" << "\n";
-}
-    return 0;
-}
-// } Driver Code Ends
